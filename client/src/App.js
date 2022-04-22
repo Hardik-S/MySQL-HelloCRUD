@@ -10,7 +10,7 @@ function App() {
   const [country, setCountry] = useState("Canada");
   const [position, setPosition] = useState("CEO");
   const [wage, setWage] = useState(0);
-  const [birthdate, setBirthdate] = useState("01/01/1970");
+  const [startdate, setstartdate] = useState("01/01/1970");
 
   // complex state hooks
   const [newWage, setNewWage] = useState(0);
@@ -24,7 +24,7 @@ function App() {
       country: country,
       position: position,
       wage: wage,
-      birthdate: birthdate,
+      startdate: startdate,
     }).then(() => {
       setEmployeeList([
         ...employeeList,
@@ -34,7 +34,7 @@ function App() {
           country: country,
           position: position,
           wage: wage,
-          birthdate: birthdate,
+          startdate: startdate,
         },
       ]);
     });
@@ -60,7 +60,7 @@ function App() {
                   age: val.age,
                   position: val.position,
                   wage: newWage,
-                  birthdate: val.birthdate,
+                  startdate: val.startdate,
                 }
               : val;
           })
@@ -80,7 +80,7 @@ function App() {
   };
 
   const displayInfo = () => {
-    console.log("name: " + name + "\nage: " + age + "\ncountry: " + country + "\nposition: " + position + "\nwage: " + wage + "\nbirthdate: " + birthdate);
+    console.log("name: " + name + "\nage: " + age + "\ncountry: " + country + "\nposition: " + position + "\nwage: " + wage + "\nstartdate: " + startdate);
   };
 
   return (
@@ -129,11 +129,11 @@ function App() {
             setWage(event.target.value);
           }}
         />
-        <label>Birthdate:</label>
+        <label>Startdate:</label>
         <input
           type="text"
           onChange={(event) => {
-            setBirthdate(event.target.value);
+            setstartdate(event.target.value);
           }}
         />    
 
@@ -160,7 +160,7 @@ function App() {
                 <h3>Country: {val.country}</h3>
                 <h3>Position: {val.position}</h3>
                 <h3>Wage: {val.wage}</h3>
-                <h3>Birthdate: {val.birthdate}</h3>
+                <h3>startdate: {val.startdate}</h3>
               </div>
               <div>
                 <input

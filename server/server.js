@@ -1,3 +1,8 @@
+/**
+ * This is the server class, it allows CRUD operations to be executed and stored.
+ */
+
+// import dependencies
 const express = require("express");
 const app = express();
 const mysql = require("mysql");
@@ -6,29 +11,34 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+// mySQL database connection
 const db = mysql.createConnection({
   user: "root",
   host: "localhost",
   password: "password",
-  database: "employeeSystem",
+  database: "employeeSystem",     // the created database following camelCase
 });
 
+// post request to insert (create) employees in database with request and response
 app.post("/create", (req, res) => {
+  // request input data from front end (app.js), if empty then use default values
   const name = req.body.name;
   const age = req.body.age;
   const country = req.body.country;
   const position = req.body.position;
   const wage = req.body.wage;
-  const birthdate = req.body.birthdate;
+  const startdate = req.body.startdate;
 
+  // query using SQL insert statement
   db.query(
-    "INSERT INTO employees (name, age, country, position, wage, birthdate) VALUES (?,?,?,?,?,?)",
-    [name, age, country, position, wage, birthdate],
+    "INSERT INTO employees (name, age, country, position, wage, startdate) VALUES (?,?,?,?,?,?)",
+    [name, age, country, position, wage, startdate],
     (err, result) => {
+      // if there is an error, log it to the console 
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted");
+        res.send("Values successfully inserted...");
       }
     }
   );
@@ -36,6 +46,7 @@ app.post("/create", (req, res) => {
 
 app.get("/employees", (req, res) => {
   db.query("SELECT * FROM employees", (err, result) => {
+    // if there is an error, log it to the console 
     if (err) {
       console.log(err);
     } else {
@@ -51,6 +62,7 @@ app.put("/update", (req, res) => {
     "UPDATE employees SET wage = ? WHERE id = ?",
     [wage, id],
     (err, result) => {
+    // if there is an error, log it to the console 
       if (err) {
         console.log(err);
       } else {
