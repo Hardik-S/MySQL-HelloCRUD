@@ -14,6 +14,8 @@ function App() {
 
     // complex state hooks
     const [newWage, setNewWage] = useState(0);
+
+    // saves database as array upon axios request to mySQL workbench
     const [employeeList, setEmployeeList] = useState([]);
 
     // addEmployee function
@@ -45,7 +47,10 @@ function App() {
 
     // getEmployees function
     const getEmployees = () => {
-        Axios.get('http://localhost:3001/employees').then((response) => {
+	// fetch mySQL database data using axios get request
+        Axios.get('http://localhost:3001/employees')
+	// force synchronous, upon getting employees - set response data
+	.then((response) => {
             setEmployeeList(response.data);
         });
     };
@@ -106,7 +111,7 @@ function App() {
                 <label>Name:</label>
                 <input
                     type="text"
-                    onKeyUp="if(this.value<0){this.value= this.value * -1}"
+                    onKeyUp= {(this.value<0)?this.value= this.value * -1:this.value= this.value}
                     min="15"
                     onChange={(event) => {
                         setName(event.target.value);
@@ -162,6 +167,7 @@ function App() {
                 <button class="button" onClick={displayInfo}>
                     <span>Console Log Display Info </span>
                 </button>
+
                 <button class="button" onClick={getEmployees}>
                     <span>Show Employees </span>
                 </button>
@@ -180,26 +186,30 @@ function App() {
                             <div>
                                 <input
                                     type="text"
-                                    placeholder="2000..."
+                                    placeholder=""
                                     onChange={(event) => {
                                         setNewWage(event.target.value);
                                     }}
                                 />
                                 <button
+				class="button"
+				
                                     onClick={() => {
                                         updateEmployeeWage(val.id);
                                     }}
                                 >
                                     {' '}
-                                    Update
+                                    <span>Update </span>
                                 </button>
 
                                 <button
+				class="button" 
+				
                                     onClick={() => {
                                         deleteEmployee(val.id);
                                     }}
                                 >
-                                    Delete
+                                    <span>Delete </span>
                                 </button>
                             </div>
                         </div>

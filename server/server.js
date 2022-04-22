@@ -8,7 +8,11 @@ const app = express();
 const mysql = require('mysql');
 const cors = require('cors');
 
+// use cors to allow for restricted resources to be requested
+// from the client with user input to the backend server
 app.use(cors());
+
+// use express.json to parse the `body` object from app.js
 app.use(express.json());
 
 // mySQL database connection
