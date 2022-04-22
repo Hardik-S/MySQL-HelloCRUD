@@ -19,10 +19,11 @@ app.post("/create", (req, res) => {
   const country = req.body.country;
   const position = req.body.position;
   const wage = req.body.wage;
+  const birthdate = req.body.birthdate;
 
   db.query(
-    "INSERT INTO employees (name, age, country, position, wage) VALUES (?,?,?,?,?)",
-    [name, age, country, position, wage],
+    "INSERT INTO employees (name, age, country, position, wage, birthdate) VALUES (?,?,?,?,?,?)",
+    [name, age, country, position, wage, birthdate],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -70,6 +71,7 @@ app.delete("/delete/:id", (req, res) => {
   });
 });
 
+// Server life check
 app.listen(3001, () => {
-  console.log("Yey, your server is running on port 3001");
+  console.log("Excellent, the server is alive and running! Port: 3001");
 });

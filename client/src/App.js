@@ -3,16 +3,20 @@ import { useState } from "react";
 import Axios from "axios";
 
 function App() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [country, setCountry] = useState("");
-  const [position, setPosition] = useState("");
+
+  // simple state variables and hooks
+  const [name, setName] = useState("Rythm");
+  const [age, setAge] = useState(18);
+  const [country, setCountry] = useState("Canada");
+  const [position, setPosition] = useState("CEO");
   const [wage, setWage] = useState(0);
+  const [birthdate, setBirthdate] = useState("01/01/1970");
 
+  // complex state hooks
   const [newWage, setNewWage] = useState(0);
-
   const [employeeList, setEmployeeList] = useState([]);
 
+  // addEmployee function
   const addEmployee = () => {
     Axios.post("http://localhost:3001/create", {
       name: name,
@@ -20,6 +24,7 @@ function App() {
       country: country,
       position: position,
       wage: wage,
+      birthdate: birthdate,
     }).then(() => {
       setEmployeeList([
         ...employeeList,
@@ -29,11 +34,13 @@ function App() {
           country: country,
           position: position,
           wage: wage,
+          birthdate: birthdate,
         },
       ]);
     });
   };
 
+  // getEmployees function
   const getEmployees = () => {
     Axios.get("http://localhost:3001/employees").then((response) => {
       setEmployeeList(response.data);
@@ -53,6 +60,7 @@ function App() {
                   age: val.age,
                   position: val.position,
                   wage: newWage,
+                  birthdate: val.birthdate,
                 }
               : val;
           })
@@ -71,18 +79,24 @@ function App() {
     });
   };
 
+  const displayInfo = () => {
+    console.log("name: " + name + "\nage: " + age + "\ncountry: " + country + "\nposition: " + position + "\nwage: " + wage + "\nbirthdate: " + birthdate);
+  };
+
   return (
-    <div className="App">
+    <div className="App" class = "fullscreen">
       <div className="information">
+
         <label>Name:</label>
         <input
           type="text" 
-          onkeyup="if(this.value<0){this.value= this.value * -1}"
+          onKeyUp="if(this.value<0){this.value= this.value * -1}"
           min="15"
           onChange={(event) => {
             setName(event.target.value);
           }}
         />
+
         <label>Age:</label>
         <input
           type="number"
@@ -90,6 +104,7 @@ function App() {
             setAge(event.target.value);
           }}
         />
+
         <label>Country:</label>
         <input
           type="text"
@@ -97,6 +112,7 @@ function App() {
             setCountry(event.target.value);
           }}
         />
+
         <label>Position:</label>
         <input
           type="text"
@@ -104,17 +120,36 @@ function App() {
             setPosition(event.target.value);
           }}
         />
+
         <label>Wage (year):</label>
         <input
           type="number"
+          min="0"
           onChange={(event) => {
             setWage(event.target.value);
           }}
         />
-        <button onClick={addEmployee}>Add Employee</button>
+        <label>Birthdate:</label>
+        <input
+          type="text"
+          onChange={(event) => {
+            setBirthdate(event.target.value);
+          }}
+        />    
+
+        <button class = "button" 
+        onClick={addEmployee}>
+          <span>Add Employee       </span></button>
+      
       </div>
+
       <div className="employees">
-        <button onClick={getEmployees}>Show Employees</button>
+      <button class = "button" 
+        onClick={displayInfo}>
+          <span>Console Log Display Info       </span></button>
+        <button class = "button" 
+        onClick={getEmployees}>
+          <span>Show Employees       </span></button>
 
         {employeeList.map((val, key) => {
           return (
@@ -125,6 +160,7 @@ function App() {
                 <h3>Country: {val.country}</h3>
                 <h3>Position: {val.position}</h3>
                 <h3>Wage: {val.wage}</h3>
+                <h3>Birthdate: {val.birthdate}</h3>
               </div>
               <div>
                 <input
