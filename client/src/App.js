@@ -51,10 +51,12 @@ function App() {
                 Axios.get('http://localhost:3001/employees')
                         // force synchronous, upon getting employees - set response data
                         .then((response) => {
+                                // set the employee list as the data retrieved from the database
                                 setEmployeeList(response.data);
                         });
         };
 
+        // update employee salary
         const updateEmployeeWage = (id) => {
                 Axios.put('http://localhost:3001/update', {
                         wage: newWage,
@@ -81,7 +83,9 @@ function App() {
         const deleteEmployee = (id) => {
                 Axios.delete(`http://localhost:3001/delete/${id}`).then(
                         (response) => {
+				console.log(id);
                                 setEmployeeList(
+					
                                         employeeList.filter((val) => {
                                                 return val.id !== id;
                                         })
@@ -183,10 +187,12 @@ function App() {
                                         <span>Show Employees </span>
                                 </button>
 
+				{/* rendering employee list by mapping it using key value pairs */}
                                 {employeeList.map((val, key) => {
                                         return (
+                                                // note classname `employee` without the pluralizing `s`
                                                 <div className="employee">
-                                                        <div>
+                                                        <div > 
                                                                 <h3>
                                                                         Name:{' '}
                                                                         {
@@ -218,7 +224,7 @@ function App() {
                                                                         }
                                                                 </h3>
                                                                 <h3>
-                                                                        startdate:{' '}
+                                                                        Startdate:{' '}
                                                                         {
                                                                                 val.startdate
                                                                         }

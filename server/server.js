@@ -74,6 +74,7 @@ app.put('/update', (req, res) => {
                         if (err) {
                                 console.log(err);
                         } else {
+				console.log("successful update");
                                 res.send(result);
                         }
                 }
@@ -83,10 +84,12 @@ app.put('/update', (req, res) => {
 /* 4) delete request to remove employee from SQL database using primary key id */
 app.delete('/delete/:id', (req, res) => {
         const id = req.params.id;
+	console.log("from server: " + id);
         db.query('DELETE FROM employees WHERE id = ?', id, (err, result) => {
                 if (err) {
                         console.log(err);
                 } else {
+			console.log("successful delete");
                         res.send(result);
                 }
         });
